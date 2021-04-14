@@ -17,7 +17,7 @@ const Regular = () => {
     const fd = new FormData();
     fd.append('image', file, file.name);
     axios
-      .post(`/image`, fd, {
+      .post(`/api/image`, fd, {
         onUploadProgress: (progressEvent) => {
           console.log(
             'Upload progress: ',
@@ -32,44 +32,45 @@ const Regular = () => {
       })
       .catch((err) => {
         console.log(err);
+        setInputContainsFile(false);
       });
   };
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     if (inputContainsFile) {
       setCurrentlyUploading(true);
-      e.preventDefault();
       fileUploadHandler();
-      setInputContainsFile(false);
     }
   };
 
   return (
     <div className='regular'>
-      {currentlyUploading ? (
-        <img
-          src={LoadingDots}
-          className='loadingdots'
-          alt='upload in progress'
-        />
-      ) : (
-        <>
-          <input
-            className='file-input'
-            onChange={handleFile}
-            type='file'
-            name='file'
-            id='file'
+      <div className='inputcontainer'>
+        {currentlyUploading ? (
+          <img
+            src={LoadingDots}
+            className='loadingdots'
+            alt='upload in progress'
           />
-          <label
-            className={`inputlabel ${file && 'file-selected'}`}
-            htmlFor='file'
-            onClick={handleClick}
-          >
-            {file ? <>confirm</> : <>new profile pic</>}
-          </label>
-        </>
-      )}
+        ) : (
+          <>
+            <input
+              className='file-input'
+              onChange={handleFile}
+              type='file'
+              name='file'
+              id='file'
+            />
+            <label
+              className={`inputlabel ${file && 'file-selected'}`}
+              htmlFor='file'
+              onClick={handleClick}
+            >
+              {file ? <>confirm</> : <>new profile pic</>}
+            </label>
+          </>
+        )}
+      </div>
     </div>
   );
 };

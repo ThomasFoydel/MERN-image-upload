@@ -1,66 +1,6 @@
-$break-medium: 850px;
-$break-small: 414px;
-
-.editusercurrentvaluelabel {
-  max-width: 30rem;
-  padding: 0.2rem;
-  border-radius: 0.2rem;
-}
-
-.edituserforminput {
-  width: 60rem;
-  margin: 1rem auto;
-  display: block;
-  padding: 0.5rem 1rem;
-  border-width: 0 0 2px 0;
-  border-color: rgb(78, 78, 78);
-  background: rgba(100, 190, 250, 0.144);
-  border-radius: 0.2rem;
-  &:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 3rem white inset !important;
-  }
-  @media screen and (max-width: $break-medium) {
-    width: 28rem;
-  }
-  @media screen and (max-width: $break-small) {
-    width: 22rem;
-  }
-}
-
-.edituserformbutton {
-  margin-top: 1.8rem;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  color: rgb(82, 157, 250);
-  padding: 0.5rem 1rem !important;
-  border-radius: 0.8rem !important;
-  width: 50%;
-  background: rgb(232, 239, 248) !important;
-  border: none;
-  box-shadow: 0.1rem 0.1rem 0.1rem rgba(153, 153, 153, 0.808);
-  transition: background 0.1s, transform 0.1s, color 0.1s;
-  &:hover {
-    background: rgb(160, 202, 253) !important;
-    transform: translateY(-0.2rem) translateX(-50%);
-    box-shadow: 0.2rem 0.2rem 0.2rem rgba(153, 153, 153, 0.568);
-    color: white;
-  }
-  &:active {
-    transform: translateY(0.1rem) translateX(-50%);
-    background: white !important;
-    color: rgb(70, 70, 70);
-    box-shadow: 0.14rem 0.14rem 0.14rem rgba(153, 153, 153, 0.808);
-  }
-
-  @media screen and (max-width: $break-small) {
-    transform: translateY(0) translateX(-50%);
-    &:hover {
-      transform: translateY(0) translateX(-50%);
-    }
-    &:active {
-      transform: translateY(0) translateX(-50%);
-    }
-  }
+.regular {
+  background: #ddd;
+  padding: 2rem;
 }
 
 .file-input {
@@ -72,61 +12,53 @@ $break-small: 414px;
   z-index: -1;
 }
 
-.file-selected {
-  background: rgb(82, 243, 255) !important;
-  transition: background 0.2s;
-  &:hover {
-    background: rgb(66, 181, 189) !important;
-  }
+.inputlabel.file-selected {
+  background: rgb(82, 243, 255);
+  color: rgb(125, 16, 142);
+}
+
+.inputcontainer {
+  height: 6em;
+  width: 20em;
+  transform: translateX(-50%);
+  margin-left: 50%;
 }
 
 .inputlabel {
+  height: 100%;
+  width: 100%;
+  font-size: 2.4rem;
+  font-weight: bold;
   text-align: center;
-  min-width: 20rem;
-  color: rgb(56, 87, 228);
-  background: rgb(248, 248, 248);
-  margin-top: 0.1rem;
-  height: 3.4rem;
-  display: inline-block;
-  padding: 0.58rem 1.4rem;
-  border-radius: 0.3rem;
-  transform: translateX(-50%);
-  margin-left: 50%;
-  transition: color 0.2s, background 0.2s, transform 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(125, 16, 142);
+  border: 2px solid rgb(88, 6, 101);
+  color: rgb(117, 232, 240);
+  border-radius: 4px;
+  transition: all 0.2s ease;
   box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.466);
+  cursor: pointer;
+
   &:hover {
-    background-color: rgb(82, 94, 255);
-    color: white;
-    cursor: pointer;
-    transform: translateX(-50%) translateY(-0.25rem);
+    background: rgb(117, 232, 240);
+    border-color: rgb(95, 195, 202);
+    color: rgb(88, 6, 101);
+    transform: translateY(-0.25rem);
     box-shadow: 0.45rem 0.45rem 0.45rem rgba(153, 153, 153, 0.651);
   }
   &:active {
-    transform: translateX(-50%) translateY(-0.1rem);
+    transform: translateY(-0.1rem);
     box-shadow: 0.35rem 0.35rem 0.35rem rgba(153, 153, 153, 0.842);
-    background-color: rgb(215, 218, 255);
-    color: rgb(36, 51, 255);
-  }
-
-  @media screen and (max-width: $break-medium) {
-    min-width: 15rem;
-    width: 17rem;
-  }
-  @media screen and (max-width: $break-small) {
-    min-width: 10rem;
-    width: 12rem;
+    background: rgb(125, 16, 142);
+    color: rgb(117, 232, 240);
   }
 }
 
 .loadingdots {
-  height: 30rem;
-  width: 40rem;
-  margin-left: 55%;
+  height: 6em;
+  width: 20em;
+  margin-left: 50%;
   transform: translateX(-50%);
-  margin-top: -13rem;
-  @media screen and (max-width: $break-medium) {
-    height: 21rem;
-    width: 15rem;
-    margin-top: -9rem;
-  }
 }
