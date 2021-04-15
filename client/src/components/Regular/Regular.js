@@ -7,6 +7,7 @@ const Regular = () => {
   const [file, setFile] = useState(null);
   const [inputContainsFile, setInputContainsFile] = useState(false);
   const [currentlyUploading, setCurrentlyUploading] = useState(false);
+  const [imageId, setImageId] = useState(null);
 
   const handleFile = (event) => {
     setFile(event.target.files[0]);
@@ -17,7 +18,7 @@ const Regular = () => {
     const fd = new FormData();
     fd.append('image', file, file.name);
     axios
-      .post(`/api/image`, fd, {
+      .post(`/api/image/upload`, fd, {
         onUploadProgress: (progressEvent) => {
           console.log(
             'Upload progress: ',
@@ -25,7 +26,8 @@ const Regular = () => {
           );
         },
       })
-      .then((res) => {
+      .then(({ data }) => {
+        setImageId(data);
         setFile(null);
         setInputContainsFile(false);
         setCurrentlyUploading(false);
@@ -45,6 +47,25 @@ const Regular = () => {
 
   return (
     <div className='regular'>
+      <div className='image-section'>
+        {imageId ? (
+          <>
+            <img
+              className='image'
+              src={`/api/image/${imageId}`}
+              alt='regular version'
+            />
+            <div>
+              <a href={`/api/image/${imageId}`}>
+                link: {`/api/image/${imageId}`}
+              </a>
+              <p>this image will be deleted from the db after a day or so</p>
+            </div>
+          </>
+        ) : (
+          <p>no regular version pic loaded</p>
+        )}
+      </div>
       <div className='inputcontainer'>
         {currentlyUploading ? (
           <img
@@ -66,7 +87,7 @@ const Regular = () => {
               htmlFor='file'
               onClick={handleClick}
             >
-              {file ? <>confirm</> : <>new profile pic</>}
+              {file ? <>SUBMIT</> : <>REGULAR VERSION</>}
             </label>
           </>
         )}
