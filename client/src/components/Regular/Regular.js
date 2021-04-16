@@ -65,15 +65,13 @@ const Regular = () => {
               src={`/api/image/${imageId}`}
               alt='regular version'
             />
-            <div>
-              <a href={`/api/image/${imageId}`}>
-                link: {`/api/image/${imageId}`}
-              </a>
-              <p>this image will be deleted from the db after a day or so</p>
-            </div>
+
+            <a className='link' href={`/api/image/${imageId}`} target='_blank'>
+              link
+            </a>
           </>
         ) : (
-          <p>no regular version pic loaded</p>
+          <p className='nopic'>no regular version pic yet</p>
         )}
       </div>
       <div className='inputcontainer'>

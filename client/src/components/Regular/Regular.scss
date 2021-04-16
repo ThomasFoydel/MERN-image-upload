@@ -1,74 +1,85 @@
 .regular {
-  background: #bbb;
-  padding: 2rem;
-}
-
-.file-input {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-}
-
-.inputlabel.file-selected {
-  background: rgb(0, 0, 0);
-  color: rgb(240, 13, 108);
-}
-
-.inputcontainer {
-  height: 6em;
-  width: 20em;
-  transform: translateX(-50%);
-  margin-left: 50%;
-}
-
-.inputlabel {
-  height: 100%;
-  width: 100%;
-  font-size: 2.4rem;
-  font-weight: bold;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgb(125, 16, 142);
-  border: 2px solid rgb(88, 6, 101);
-  color: rgb(252, 185, 213);
+  background: linear-gradient(to bottom right, #ccc, #eee);
   border-radius: 4px;
-  transition: all 0.2s ease;
-  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.466);
-  cursor: pointer;
+  padding: 2rem;
 
-  &:hover {
-    background: rgb(88, 6, 101);
-    transform: translateY(-0.25rem);
-    box-shadow: 0.45rem 0.45rem 0.45rem rgba(153, 153, 153, 0.651);
+  .file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
   }
-  &:active {
-    transform: translateY(-0.1rem);
-    box-shadow: 0.35rem 0.35rem 0.35rem rgba(153, 153, 153, 0.842);
+
+  .inputlabel.file-selected {
+    background: rgb(0, 0, 0);
+    color: rgb(240, 13, 108);
+  }
+
+  .inputcontainer {
+    height: 6em;
+    width: 20em;
+    transform: translateX(-50%);
+    margin-left: 50%;
+  }
+
+  .inputlabel {
+    height: 100%;
+    width: 100%;
+    font-size: 2.4rem;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: rgb(125, 16, 142);
+    border: 2px solid rgb(88, 6, 101);
+    color: rgb(252, 185, 213);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.466);
+    cursor: pointer;
+
+    &:hover {
+      background: rgb(88, 6, 101);
+      transform: translateY(-0.25rem);
+      box-shadow: 0.45rem 0.45rem 0.45rem rgba(153, 153, 153, 0.651);
+    }
+    &:active {
+      transform: translateY(-0.1rem);
+      box-shadow: 0.35rem 0.35rem 0.35rem rgba(153, 153, 153, 0.842);
+      background: rgb(125, 16, 142);
+    }
   }
-}
 
-.loadingdots {
-  height: 6em;
-  width: 20em;
-  margin-left: 50%;
-  transform: translateX(-50%);
-}
+  .loadingdots {
+    height: 6em;
+    width: 20em;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
 
-.image {
-  width: 25vw;
-  height: 25vw;
-  object-fit: contain;
-}
+  .image {
+    width: 25vw;
+    height: 25vw;
+    min-width: 10em;
+    min-height: 10em;
+    max-width: 20em;
+    max-height: 20em;
+    object-fit: contain;
+  }
 
-.image-section {
-  height: 20em;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  .image-section {
+    height: 20em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .link,
+  .nopic {
+    color: black;
+  }
 }
