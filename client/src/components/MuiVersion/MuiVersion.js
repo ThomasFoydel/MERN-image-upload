@@ -28,9 +28,14 @@ const useStyles = makeStyles({
 const MuiVersion = () => {
   const classes = useStyles();
   const [show, setShow] = useState(false);
-  const handleFile = () => {};
-  const handleDelete = () => {};
-  const handleSubmit = () => {};
+  const [imageFile, setImageFile] = useState();
+
+  const handleFile = ([file]) => file && setImageFile(file);
+
+  const handleDelete = () => {
+    setImageFile(null);
+  };
+  const handleSubmit = ([file]) => {};
   return (
     <div className={classes.muiVersion}>
       <Button className={classes.btn} onClick={() => setShow(true)}>

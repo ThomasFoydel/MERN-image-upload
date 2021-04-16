@@ -8,6 +8,7 @@ const Regular = () => {
   const [inputContainsFile, setInputContainsFile] = useState(false);
   const [currentlyUploading, setCurrentlyUploading] = useState(false);
   const [imageId, setImageId] = useState(null);
+  const [progress, setProgress] = useState(null);
 
   const handleFile = (event) => {
     setFile(event.target.files[0]);
@@ -20,6 +21,7 @@ const Regular = () => {
     axios
       .post(`/api/image/upload`, fd, {
         onUploadProgress: (progressEvent) => {
+          setProgress((progressEvent.loaded / progressEvent.total) * 100);
           console.log(
             'Upload progress: ',
             Math.round((progressEvent.loaded / progressEvent.total) * 100)
@@ -33,8 +35,16 @@ const Regular = () => {
         setCurrentlyUploading(false);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 400) {
+          const errMsg = err.response.data;
+          console.log(errMsg);
+          alert(errMsg);
+        } else {
+          console.log('db error');
+          alert('db error');
+        }
         setInputContainsFile(false);
+        setCurrentlyUploading(false);
       });
   };
 

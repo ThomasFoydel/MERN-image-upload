@@ -45,8 +45,29 @@ const storage = new GridFsStorage({
   },
 });
 
-const upload = multer({
+const store = multer({
   storage,
+  // limit the size to 10mb for any files coming in
+  limits: { fileSize: 10000000 },
+});
+const uploadMiddleware = (req, res, next) => {
+  const upload = store.single('image');
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      // A Multer error occurred when uploading.
+      return res.status(400).send('file too large');
+    } else if (err) {
+      // An unknown error occurred when uploading.
+      return res.sendStatus(500);
+    }
+    // all good, proceed
+    next();
+  });
+};
+multer({
+  storage,
+  // limit the size to 20mb for any files coming in
+  limits: { fileSize: 1000000 },
 });
 
 const deleteImage = (id) => {
@@ -78,7 +99,7 @@ router.get('/:id', ({ params: { id } }, res) => {
   });
 });
 
-router.post('/upload/', upload.single('image'), async (req, res) => {
+router.post('/upload/', uploadMiddleware, async (req, res) => {
   // get the .file property from req that was added by the upload middleware
   const { file } = req;
   // and the id of that new image file

@@ -20,6 +20,7 @@ const mongoURI = process.env.MONGO_URI;
 const conn = mongoose.createConnection(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 let gfs;
