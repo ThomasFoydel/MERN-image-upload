@@ -74,17 +74,23 @@ const MuiVersion = () => {
           setImageId(data);
           setImageFile(null);
           setCurrentlyUploading(false);
+          setShow(false);
         })
         .catch((err) => {
           if (err.response.status === 400) {
             const errMsg = err.response.data;
-            console.log(errMsg);
-            alert(errMsg);
-          } else {
+            if (errMsg) {
+              console.log(errMsg);
+              alert(errMsg);
+            }
+          } else if (err.response.status === 500) {
             console.log('db error');
             alert('db error');
+          } else {
+            console.log('other error');
           }
           setCurrentlyUploading(false);
+          setShow(false);
         });
     }
   };

@@ -20,8 +20,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// be sure to set your MONGO_URI in a .env file in both the root folder of your project
-// and in the config variables section on Heroku, in the settings page for your app
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,

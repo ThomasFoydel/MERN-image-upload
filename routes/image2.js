@@ -54,11 +54,11 @@ const upload = multer({
 });
 
 const deleteImage = (id) => {
-  if (!id || id === 'undefined') return res.send({ err: 'no image id' });
+  if (!id || id === 'undefined') return res.status(400).send('no image id');
   const _id = new mongoose.Types.ObjectId(id);
   gfs.delete(_id, (err) => {
     if (err) {
-      return res.send({ err: 'image deletion error' });
+      return res.status(500).send('image deletion error');
     }
   });
 };
@@ -87,13 +87,13 @@ router.post(
     const { id } = file;
     if (file.size > 5000000) {
       deleteImage(id);
-      return res.send({ err: 'file may not exceed 5mb' });
+      return res.status(400).send('file may not exceed 5mb');
     }
 
     // find the user with the id that matches the token
     const foundUser = await User.findById(userId);
     // if no user found, send an error
-    if (!foundUser) return res.send({ err: 'user not found' });
+    if (!foundUser) return res.status(400).send('user not found');
     let currentPic = foundUser.profilePic;
     // if a user currently has a profile picture, delete the old one if you
     // want to limit user's to one profile pic to save space
@@ -106,7 +106,7 @@ router.post(
       }
       gfs.delete(currentPicId, (err) => {
         if (err) {
-          return res.send({ err: 'database error' });
+          return res.status(500).send('database error');
         }
       });
     }
@@ -120,7 +120,7 @@ router.post(
     )
       .then((user) => res.send(user.profilePic))
       .catch(() => {
-        return res.send({ err: 'database error' });
+        return res.status(500).send('database error');
       });
 
     // alternatively, instead of deleting the current pic, you could just
@@ -131,7 +131,7 @@ router.post(
     //    {useFindAndModify: false})
     //   .then((user) => res.send(user.profilePic))
     //   .catch(() => {
-    //     return res.send({ err: 'database error' });
+    //     return res.status(500).send('database error');
     //   });
   }
 );

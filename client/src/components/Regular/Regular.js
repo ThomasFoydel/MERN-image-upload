@@ -23,7 +23,7 @@ const Regular = () => {
         onUploadProgress: (progressEvent) => {
           setProgress((progressEvent.loaded / progressEvent.total) * 100);
           console.log(
-            'Upload progress: ',
+            'upload progress: ',
             Math.round((progressEvent.loaded / progressEvent.total) * 100)
           );
         },
@@ -35,13 +35,15 @@ const Regular = () => {
         setCurrentlyUploading(false);
       })
       .catch((err) => {
+        console.log(err);
         if (err.response.status === 400) {
           const errMsg = err.response.data;
-          console.log(errMsg);
-          alert(errMsg);
+          if (errMsg) {
+            console.log(errMsg);
+            alert(errMsg);
+          }
         } else {
-          console.log('db error');
-          alert('db error');
+          console.log('other error: ', err);
         }
         setInputContainsFile(false);
         setCurrentlyUploading(false);
@@ -54,7 +56,6 @@ const Regular = () => {
       fileUploadHandler();
     }
   };
-
   return (
     <div className='regular'>
       <div className='image-section'>
@@ -65,7 +66,6 @@ const Regular = () => {
               src={`/api/image/${imageId}`}
               alt='regular version'
             />
-
             <a className='link' href={`/api/image/${imageId}`} target='_blank'>
               link
             </a>

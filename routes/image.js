@@ -45,38 +45,45 @@ const storage = new GridFsStorage({
   },
 });
 
+// set up our multer to use the gridfs storage defined above
 const store = multer({
   storage,
-  // limit the size to 10mb for any files coming in
-  limits: { fileSize: 10000000 },
+  // limit the size to 20mb for any files coming in
+  limits: { fileSize: 20000000 },
+  // filer out invalid filetypes
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
 });
+
+function checkFileType(file, cb) {
+  // https://youtu.be/9Qzmri1WaaE?t=1515
+  // define a regex that includes the file types we accept
+  const filetypes = /jpeg|jpg|png|gif/;
+  //check the file extention
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // more importantly, check the mimetype
+  const mimetype = filetypes.test(file.mimetype);
+  // if both are good then continue
+  if (mimetype && extname) return cb(null, true);
+  // otherwise, return error message
+  cb('filetype');
+}
+
 const uploadMiddleware = (req, res, next) => {
   const upload = store.single('image');
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      return res.status(400).send('file too large');
+      // a multer error occurred when uploading because of the size limit
+      return res.status(400).send('File too large');
     } else if (err) {
+      // check if our filetype error occurred
+      if (err === 'filetype') return res.status(400).send('Image files only');
       // An unknown error occurred when uploading.
       return res.sendStatus(500);
     }
     // all good, proceed
     next();
-  });
-};
-multer({
-  storage,
-  // limit the size to 20mb for any files coming in
-  limits: { fileSize: 1000000 },
-});
-
-const deleteImage = (id) => {
-  if (!id || id === 'undefined') return res.send({ err: 'no image id' });
-  const _id = new mongoose.Types.ObjectId(id);
-  gfs.delete(_id, (err) => {
-    if (err) {
-      return res.send({ err: 'image deletion error' });
-    }
   });
 };
 
@@ -104,15 +111,27 @@ router.post('/upload/', uploadMiddleware, async (req, res) => {
   const { file } = req;
   // and the id of that new image file
   const { id } = file;
+  // we can set other, smaller file size limits on routes that use the upload middleware
+  //
   // make this limit larger if you are accepting video content or very high quality pictures
   // 5mb is an arbitrary value that I think is a good limit for profile pictures and cover photos
-  if (file.size > 5000000) {
+  if (file.size > 1000000) {
     // if the file is too large, delete it and send an error
     deleteImage(id);
-    return res.send({ err: 'file may not exceed 5mb' });
+    return res.status(400).send('file may not exceed 5m');
   }
   console.log('uploaded file: ', file);
   return res.send(file.id);
 });
+
+const deleteImage = (id) => {
+  if (!id || id === 'undefined') return res.status(400).send('no image id');
+  const _id = new mongoose.Types.ObjectId(id);
+  gfs.delete(_id, (err) => {
+    if (err) {
+      return res.status(500).send('image deletion error');
+    }
+  });
+};
 
 module.exports = router;
