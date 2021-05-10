@@ -2,11 +2,12 @@ const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config();
+const imageRoutes = require('./routes/image');
+
 const app = express();
-const imageRoutes = require('./routes/image.js');
 const port = process.env.PORT || 8000;
 
-require('dotenv').config();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -28,6 +29,6 @@ mongoose
   })
   .then(() => {
     app.listen(port, () => {
-      console.log(`Server is running on port ${port}!`);
+      console.log(`Server is up on port ${port}!`);
     });
   });

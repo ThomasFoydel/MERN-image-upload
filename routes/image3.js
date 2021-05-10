@@ -1,4 +1,5 @@
-// example of a simple profile picture update on a user
+// example of a more complicated profile picture update on a user
+// with a separate document representing the image
 const mongoose = require('mongoose');
 const GridFsStorage = require('multer-gridfs-storage');
 const router = require('express').Router();
@@ -98,36 +99,20 @@ router.post('/change-profilepic', auth, uploadMiddleware, async (req, res) => {
   if (!foundUser) return res.status(400).send('user not found');
   let currentPic = foundUser.profilePic;
 
-  const newPic = await ProfilePicture.create({ owner: userId, fileId: id });
+  const newPic = await ProfilePicture.create({
+    owner: userId,
+    fileId: id,
+  });
   User.findByIdAndUpdate(
     userId,
     {
       profilePic: newPic._id,
       $push: { previousPictures: currentPic },
     },
-    { new: true, useFindAndModify: false }
+    { new: true, useFindAndUpdate: false }
   )
     .then((updatedUser) => res.send(updatedUser))
     .catch(() => res.sendStatus(500));
-  if (currentPic) {
-    let currentPicId;
-    try {
-      currentPicId = new mongoose.Types.ObjectId(currentPic);
-    } catch (err) {
-      console.log('invalid id: ', currentPic);
-    }
-    gfs.delete(currentPicId, (err) => {
-      if (err) return res.status(500).send('database error');
-    });
-  }
-
-  User.findByIdAndUpdate(
-    userId,
-    { profilePic: id },
-    { useFindAndModify: true, new: true }
-  )
-    .then((user) => res.send(user.profilePic))
-    .catch(() => res.status(500).send('database error'));
 });
 
 const deleteImage = (id) => {

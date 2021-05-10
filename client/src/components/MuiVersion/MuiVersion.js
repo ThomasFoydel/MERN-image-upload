@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles, Button } from '@material-ui/core';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import axios from 'axios';
+
 const useStyles = makeStyles({
   muiVersion: {
     background: 'linear-gradient(to bottom right, #ccc, #eee)',
@@ -46,53 +47,48 @@ const useStyles = makeStyles({
 const MuiVersion = () => {
   const classes = useStyles();
   const [show, setShow] = useState(false);
-  const [imageFile, setImageFile] = useState();
+  const [imageFile, setImageFile] = useState(null);
   const [progress, setProgress] = useState(null);
   const [imageId, setImageId] = useState(null);
   const [currentlyUploading, setCurrentlyUploading] = useState(false);
 
   const handleFile = ([file]) => file && setImageFile(file);
-
-  const handleDelete = () => {
-    setImageFile(null);
-  };
+  const handleDelete = () => setImageFile(null);
   const handleSubmit = ([file]) => {
-    if (file) {
-      const fd = new FormData();
-      fd.append('image', file, file.name);
-      axios
-        .post(`/api/image/upload`, fd, {
-          onUploadProgress: (progressEvent) => {
-            setProgress((progressEvent.loaded / progressEvent.total) * 100);
-            console.log(
-              'Upload progress: ',
-              Math.round((progressEvent.loaded / progressEvent.total) * 100)
-            );
-          },
-        })
-        .then(({ data }) => {
-          setImageId(data);
-          setImageFile(null);
-          setCurrentlyUploading(false);
-          setShow(false);
-        })
-        .catch((err) => {
-          if (err.response.status === 400) {
-            const errMsg = err.response.data;
-            if (errMsg) {
-              console.log(errMsg);
-              alert(errMsg);
-            }
-          } else if (err.response.status === 500) {
-            console.log('db error');
-            alert('db error');
-          } else {
-            console.log('other error');
+    const fd = new FormData();
+    fd.append('image', file, file.name);
+    axios
+      .post('/api/image/upload', fd, {
+        onUploadProgress: (progressEvent) => {
+          setProgress((progressEvent.loaded / progressEvent.total) * 100);
+          console.log(
+            'upload progress: ',
+            Math.round((progressEvent.loaded / progressEvent.total) * 100)
+          );
+        },
+      })
+      .then(({ data }) => {
+        setImageId(data);
+        setImageFile(null);
+        setCurrentlyUploading(false);
+        setShow(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          const errMsg = err.response.data;
+          if (errMsg) {
+            console.log(errMsg);
+            alert(errMsg);
           }
-          setCurrentlyUploading(false);
-          setShow(false);
-        });
-    }
+        } else if (err.response.status === 500) {
+          console.log('db error');
+          alert('db error');
+        } else {
+          console.log('other error');
+        }
+        setCurrentlyUploading(false);
+        setShow(false);
+      });
   };
   return (
     <div className={classes.muiVersion}>
@@ -129,12 +125,15 @@ const MuiVersion = () => {
         filesLimit={1}
         showFileNamesInPreview={false}
         showFileNames={false}
-        dropzoneText={'drop it here'}
+        dropzoneText={'Drop it here'}
         getFileAddedMessage={() => 'file added!'}
         getFileRemovedMessage={() => 'file removed!'}
         onAlert={(alert) => console.log({ alert })}
         getFileLimitExceedMessage={() => 'file is too big'}
-        getDropRejectMessage={() => 'invalid file type'}
+        getDropRejectMessage={(file) => {
+          if (file.size > 5000000) return 'file is too big';
+          else return 'invalid file type';
+        }}
         onSave={handleSubmit}
       />
     </div>

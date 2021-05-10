@@ -42,6 +42,9 @@ const Regular = () => {
             console.log(errMsg);
             alert(errMsg);
           }
+        } else if (err.response.status === 500) {
+          console.log('db error');
+          alert('db error');
         } else {
           console.log('other error: ', err);
         }
