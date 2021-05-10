@@ -1,0 +1,44 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+html {
+  font-size: 62.5%;
+  background: #222;
+}
+
+body {
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.7;
+  box-sizing: border-box;
+  background: rgba(245, 245, 245, 0);
+}
+
+a {
+  color: inherit;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+h1 {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.App {
+  font-family: sans-serif;
+  color: white;
+  padding: 0 2em 4em 2em;
+}
