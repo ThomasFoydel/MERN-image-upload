@@ -1,0 +1,41 @@
+{
+  muiVersion: {
+    background: 'linear-gradient(to bottom right, #ccc, #eee)',
+    marginTop: '4em',
+    textAlign: 'center',
+    padding: '1em',
+    borderRadius: '4px',
+  },
+  btn: {
+    background: '#333',
+    color: 'white',
+    fontSize: '2.4rem',
+    fontWeight: 'bold',
+    transition: 'all 0.3s ease',
+    padding: '1em 2.4em',
+    boxShadow: '0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.466)',
+    '&:hover': {
+      background: '#111',
+      transform: 'translateY(-0.25rem)',
+      boxShadow: '0.45rem 0.45rem 0.45rem rgba(153, 153, 153, 0.651)',
+    },
+  },
+  imageSection: {
+    height: '20em',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  img: {
+    width: '25vw',
+    height: '25vw',
+    minWidth: '10em',
+    minHeight: '10em',
+    maxWidth: '20em',
+    maxHeight: '20em',
+    objectFit: 'contain',
+  },
+  nopic: { color: 'black' },
+  link: { color: 'black' },
+}
