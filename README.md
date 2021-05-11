@@ -1,14 +1,15 @@
 <h1 align='center'>MERN Image Upload</h1>
 <p align="center">An image uploading system for the MERN stack built with Grid-FS</p>
 
-WORK IN PROGRESS
-Should be completed by May 2021
+Howdy partner. This here is the finished code for the MERN Stack Image Uploader tutorial, which can be found <a href="https://www.youtube.com/watch?v=OvbRLY1QRIk">on youtube</a>
 
-currently building out a general purpose grid fs image upload demo based on previous projects (to go with a new tutorial)
+The starter code for that tutorial can be found <a href="https://github.com/ThomasFoydel/mern-heroku-template">over here</a>
 
-also intending to demo how to implement this with a social media authentication/account system (profile and cover pictures)
+If you are just looking for the resource files to use while building from the starter code, you'll find em <a href="https://github.com/ThomasFoydel/MERN-image-upload/tree/main/resources">right here</a>
 
-also intending to demo multiple options for the file inputs on the front end
+If you run into any major issues, feel free to reach out in the comment section of the video, or at my email, thomasjfoydel@gmail.com
+
+Good luck and happy coding
 
 # License
 
